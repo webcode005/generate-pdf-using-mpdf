@@ -1,0 +1,12 @@
+ public function GenerateSimplePdf()
+    {
+        $this->autoRender = false;
+
+        $html = "<h1>Hello PDF</h1><p>This is a test.</p>";
+
+        $this->Mpdf->init();
+        $this->Mpdf->SetDisplayMode('fullpage');
+        $this->Mpdf->WriteHTML($html);
+
+        $this->Mpdf->Output("test.pdf", 'D');
+    }
