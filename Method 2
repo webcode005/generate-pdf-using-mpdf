@@ -1,0 +1,24 @@
+  public function GenerateSimplePdf()
+{
+    $this->autoRender = false;
+    $this->layout = false;
+
+    // Render HTML from view
+    $html = $this->render('sample-table');
+
+    // ✅ Fix invalid UTF-8 characters
+    $html = mb_convert_encoding($html, 'UTF-8', 'UTF-8');
+
+    // Optional: Save HTML to check
+    // file_put_contents(WWW_ROOT . 'debug-html.html', $html);
+
+    $this->Mpdf->init();
+    $this->Mpdf->SetDisplayMode('fullpage');
+    $this->Mpdf->SetAutoFont();
+    $this->Mpdf->SetTitle('Sample Table PDF');
+
+    $this->Mpdf->WriteHTML($html);
+
+    $file_name = "Sample_Table_" . time() . ".pdf";
+    $this->Mpdf->Output($file_name, 'D'); // ✅ This triggers download
+}
